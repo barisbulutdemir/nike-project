@@ -1,11 +1,16 @@
 import {createSlice} from "@reduxjs/toolkit";
-import item from "../components/utils/Item.jsx";
+import toast from "react-hot-toast";
 
 
 const initialState = {
     cartState: false,
     cartItems: [],
+    cartQuantity: 0,
+
 };
+console.log(initialState);
+
+
 
 const CartSlice = createSlice({
     initialState,
@@ -22,16 +27,26 @@ const CartSlice = createSlice({
                 (item) => item.id === action.payload.id
             );
 
-            if (itemIndex >= 0) {
-                state.cartItems[itemIndex].cartQuantity += 1;
+           if (itemIndex >= 0) {
+               state.cartItems[itemIndex].cartQuantity += 1;
+               toast.success(`Item QTY Increased `)
+           } else {
+               const temp = {...action.payload, cartQuantity: 1};
+               state.cartItems.push(temp);
 
-            } else {
-                const temp = { ...action.payload, cartQuantity: 1 };
-                state.cartItems.push(temp); }
-
-
+               toast.success(` ${action.payload.title} added to Cart`)
+           }
         }
-    }
+
+
+
+
+    },
+        setIncreaseCartItemQuantity: (state, action) => {
+            const itemIndex = action.payload;
+            state.cartItems[itemIndex].cartQuantity += 1;
+        }
+
 })
 
 export const {setOpenCart, setCloseCart,setAddItemToCart} = CartSlice.actions;
