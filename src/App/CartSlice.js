@@ -4,11 +4,12 @@ import toast from "react-hot-toast";
 
 const initialState = {
     cartState: false,
-    cartItems: [],
-    cartQuantity: 0,
-
+    cartItems: localStorage.getItem("cart")
+        ? JSON.parse(localStorage.getItem("cart"))
+        : [], // Let Suppose Database
+    cartTotalAmount: 0,
+    cartTotalQantity: 0,
 };
-console.log(initialState);
 
 
 
@@ -29,27 +30,21 @@ const CartSlice = createSlice({
 
            if (itemIndex >= 0) {
                state.cartItems[itemIndex].cartQuantity += 1;
-               toast.success(`Item QTY Increased `)
+               toast.success(`Item QTY Increased `);
            } else {
                const temp = {...action.payload, cartQuantity: 1};
                state.cartItems.push(temp);
 
                toast.success(` ${action.payload.title} added to Cart`)
            }
+           localStorage.setItem("cart",JSON.stringify(state.cartItems));
         }
-
-
-
-
     },
-        setIncreaseCartItemQuantity: (state, action) => {
-            const itemIndex = action.payload;
-            state.cartItems[itemIndex].cartQuantity += 1;
-        }
-
 })
 
 export const {setOpenCart, setCloseCart,setAddItemToCart} = CartSlice.actions;
 export const selectCartState = (state) => state.cart.cartState;
+export const selectCartItems = (state) => state.cart.cartItems;
+
 export default CartSlice.reducer;
 

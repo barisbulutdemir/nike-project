@@ -11,6 +11,8 @@ const Item = ({ifExist, id, color, shadow, title, text, img, btn, rating, price 
     dispatch(setAddItemToCart(item));
   }
 
+
+
   return (
     <div className={`relative bg-gradient-to-b ${color} ${shadow} grid items-center
       ${ ifExist ? 'justify-items-start' : 'justify-items-center'} 
@@ -40,7 +42,8 @@ const Item = ({ifExist, id, color, shadow, title, text, img, btn, rating, price 
 
         <div className="flex items-center gap-3 my-2 ml-8">
           <button type="button" className="bg-white/90 blur-effect-theme button-theme p-0.5 shadow shadow-sky-200"
-          onClick={() => onAddToCart()}>
+          onClick={() => onAddToCart()
+          }>
             <ShoppingBagIcon className="icon-style text-slate-900" />{" "}
           </button>
           <button type="button" className="bg-white/90 blur-effect-theme button-theme px-2 shadow shadow-sky-200 text-black ">
